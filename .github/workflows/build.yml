@@ -1,0 +1,35 @@
+name: Build App
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Récupérer tous les fichiers du repo
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      # 2. Extraire le ZIP
+      - name: Extraire le ZIP
+        run: unzip mon_fichier.zip -d ./app
+
+      # 3. Se placer dans le dossier extrait
+      - name: Aller dans le dossier
+        run: cd ./app
+
+      # 4. Installer les dépendances (adapte selon ton projet)
+      - name: Installer les dépendances
+        run: npm install         # Node.js
+        # run: pip install -r requirements.txt   # Python
+        # run: composer install                  # PHP
+        working-directory: ./app
+
+      # 5. Builder l'app
+      - name: Build
+        run: npm run build       # Node.js
+        # run: python build.py           # Python
+        working-directory: ./app
